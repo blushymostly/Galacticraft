@@ -72,6 +72,8 @@ import micdoodle8.mods.galacticraft.core.client.capes.GCCapeLoader;
 import micdoodle8.mods.galacticraft.core.client.fx.EffectHandler;
 import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
 import micdoodle8.mods.galacticraft.core.client.gui.screen.InventoryTabGalacticraft;
+import micdoodle8.mods.galacticraft.core.client.gui.tabs.InventoryTabVanilla;
+import micdoodle8.mods.galacticraft.core.client.gui.tabs.TabRegistry;
 import micdoodle8.mods.galacticraft.core.client.model.ModelPlayerBaseGC;
 import micdoodle8.mods.galacticraft.core.client.model.ModelRocketTier1;
 import micdoodle8.mods.galacticraft.core.client.render.block.BlockRendererBreathableAir;
@@ -158,8 +160,6 @@ import micdoodle8.mods.galacticraft.core.tile.TileEntityTreasureChest;
 import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.wrappers.BlockMetaList;
 import micdoodle8.mods.galacticraft.core.wrappers.PlayerGearData;
-import tconstruct.client.tabs.InventoryTabVanilla;
-import tconstruct.client.tabs.TabRegistry;
 
 public class ClientProxyCore extends CommonProxyCore {
 
@@ -374,7 +374,8 @@ public class ClientProxyCore extends CommonProxyCore {
     }
 
     public static void registerInventoryTabs() {
-        if (!Loader.isModLoaded("TConstruct") && TabRegistry.getTabList().size() < 1) {
+        MinecraftForge.EVENT_BUS.register(new TabRegistry());
+        if (TabRegistry.getTabList().isEmpty()) {
             TabRegistry.registerTab(new InventoryTabVanilla());
         }
         TabRegistry.registerTab(new InventoryTabGalacticraft());
